@@ -4,6 +4,8 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
+    """Менеджер пользователя с авторизацией по email."""
+
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError("The Email field must be set")
@@ -20,6 +22,8 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    """Кастомная модель пользователя с авторизацией по email."""
+
     username = None
 
     email = models.EmailField(

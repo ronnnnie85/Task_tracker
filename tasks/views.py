@@ -3,12 +3,8 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from tasks.models import Employee, Task
-from tasks.serializers import (
-    EmployeeSerializer,
-    TaskSerializer,
-    EmployeeWithTasksSerializer,
-    ImportantTaskReportSerializer,
-)
+from tasks.serializers import (EmployeeSerializer, EmployeeWithTasksSerializer,
+                               ImportantTaskReportSerializer, TaskSerializer)
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):

@@ -1,7 +1,7 @@
 from django.utils import timezone
 from rest_framework import serializers
 
-from tasks.models import Task, Employee
+from tasks.models import Employee, Task
 
 
 class EmployeeSerializer(serializers.ModelSerializer):

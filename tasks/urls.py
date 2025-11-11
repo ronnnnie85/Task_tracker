@@ -1,14 +1,9 @@
 from django.urls import path
-
-from tasks.apps import TasksConfig
 from rest_framework import routers
 
-from tasks.views import (
-    EmployeeViewSet,
-    TaskViewSet,
-    BusyEmployeesViewList,
-    ImportantTasksView,
-)
+from tasks.apps import TasksConfig
+from tasks.views import (BusyEmployeesViewList, EmployeeViewSet,
+                         ImportantTasksView, TaskViewSet)
 
 app_name = TasksConfig.name
 

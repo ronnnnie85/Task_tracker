@@ -5,6 +5,8 @@ User = get_user_model()
 
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    """Сериализатор для регистрации пользователя."""
+
     password = serializers.CharField(write_only=True, min_length=8)
 
     class Meta:
@@ -25,6 +27,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
+    """Сериализатор для просмотра/обновления профиля пользователя."""
+
     class Meta:
         model = User
         fields = ("email", "phone", "avatar")
