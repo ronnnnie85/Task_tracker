@@ -1,14 +1,16 @@
+from django.urls import path
+
 from tasks.apps import TasksConfig
 from rest_framework import routers
 
-from tasks.views import EmployeeViewSet, TaskViewSet
+from tasks.views import EmployeeViewSet, TaskViewSet, BusyEmployeesViewList
 
 app_name = TasksConfig.name
 
-router_employee = routers.DefaultRouter()
-router_employee.register(r"employees", EmployeeViewSet, basename="employee")
+router = routers.DefaultRouter()
+router.register(r"employees", EmployeeViewSet, basename="employee")
+router.register(r"tasks", TaskViewSet, basename="task")
 
-router_task = routers.DefaultRouter()
-router_task.register(r"tasks", TaskViewSet, basename="task")
-
-urlpatterns = [] + router_employee.urls + router_task.urls
+urlpatterns = [
+    path('tasks/busy_employees/', BusyEmployeesViewList.as_view(), name='busy-employees'),
+] + router.urls
