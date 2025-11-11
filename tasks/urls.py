@@ -3,7 +3,12 @@ from django.urls import path
 from tasks.apps import TasksConfig
 from rest_framework import routers
 
-from tasks.views import EmployeeViewSet, TaskViewSet, BusyEmployeesViewList
+from tasks.views import (
+    EmployeeViewSet,
+    TaskViewSet,
+    BusyEmployeesViewList,
+    ImportantTasksView,
+)
 
 app_name = TasksConfig.name
 
@@ -14,5 +19,8 @@ router.register(r"tasks", TaskViewSet, basename="task")
 urlpatterns = [
     path(
         "tasks/busy_employees/", BusyEmployeesViewList.as_view(), name="busy-employees"
+    ),
+    path(
+        "tasks/important_tasks/", ImportantTasksView.as_view(), name="important-tasks"
     ),
 ] + router.urls
