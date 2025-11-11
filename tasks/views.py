@@ -6,7 +6,8 @@ from tasks.models import Employee, Task
 from tasks.serializers import (
     EmployeeSerializer,
     TaskSerializer,
-    EmployeeWithTasksSerializer, ImportantTaskReportSerializer,
+    EmployeeWithTasksSerializer,
+    ImportantTaskReportSerializer,
 )
 
 

@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 
 from tasks.models import Task, Employee
@@ -55,6 +56,26 @@ class TaskSerializer(serializers.ModelSerializer):
         read_only_fields = [
             "id",
         ]
+
+    def validate_deadline(self, value):
+        """Проверяет, что срок выполнения задачи не в прошлом."""
+        if value is not None and value < timezone.now():
+            raise serializers.ValidationError("Срок не может быть в прошлом.")
+        return value
+
+    def validate(self, attrs):
+        """Общая валидация полей задачи"""
+        parental_task = attrs.get("parental_task") or getattr(
+            self.instance, "parental_task", None
+        )
+        if (
+            parental_task is not None
+            and getattr(self.instance, "id", None) == parental_task.id
+        ):
+            raise serializers.ValidationError(
+                {"parental_task": "Задача не может ссылаться на себя как на родителя."}
+            )
+        return attrs
 
 
 class EmployeeWithTasksSerializer(serializers.ModelSerializer):
