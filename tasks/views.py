@@ -8,11 +8,15 @@ from tasks.serializers import (EmployeeSerializer, EmployeeWithTasksSerializer,
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
+    """CRUD для сотрудников."""
+
     serializer_class = EmployeeSerializer
     queryset = Employee.objects.all().order_by("id")
 
 
 class TaskViewSet(viewsets.ModelViewSet):
+    """CRUD для задач."""
+
     serializer_class = TaskSerializer
     queryset = (
         Task.objects.select_related("performer", "parental_task").all().order_by("id")
@@ -20,6 +24,8 @@ class TaskViewSet(viewsets.ModelViewSet):
 
 
 class BusyEmployeesViewList(ListAPIView):
+    """Занятые сотрудники."""
+
     serializer_class = EmployeeWithTasksSerializer
 
     def list(self, request, *args, **kwargs):
@@ -53,6 +59,8 @@ class BusyEmployeesViewList(ListAPIView):
 
 
 class ImportantTasksView(ListAPIView):
+    """Важные задачи."""
+
     serializer_class = ImportantTaskReportSerializer
 
     def get(self, request, *args, **kwargs):

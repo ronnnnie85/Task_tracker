@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Employee(models.Model):
+    """Модель сотрудника (исполнителя задач)."""
+
     full_name = models.CharField(
         max_length=500,
         verbose_name="ФИО сотрудника",
@@ -24,6 +26,7 @@ class Employee(models.Model):
 
 
 class Task(models.Model):
+    """Модель задачи"""
 
     class Status(models.TextChoices):
         """Перечисление возможных статусов задачи."""

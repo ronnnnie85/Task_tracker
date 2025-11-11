@@ -82,7 +82,7 @@ class TaskViewSetTests(BaseAPITestCase):
             title="Задача",
             performer=self.employee,
             status=Task.Status.NEW,
-            deadline= Future,
+            deadline=Future,
         )
         url = f"/api/tasks/{task.id}/"
         response = self.client.get(url, format="json")

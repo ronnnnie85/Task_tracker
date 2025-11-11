@@ -5,6 +5,7 @@ from tasks.models import Employee, Task
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    """Сериализатор для CRUD сотрудников."""
 
     class Meta:
         model = Employee
@@ -12,6 +13,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class TaskShortSerializer(serializers.ModelSerializer):
+    """Сериализатор короткое представление задачи"""
 
     class Meta:
         model = Task
@@ -19,23 +21,28 @@ class TaskShortSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
+    """Основной сериализатор задач."""
+
+    # на запись
     performer = serializers.PrimaryKeyRelatedField(
         queryset=Employee.objects.all(),
         required=False,
         allow_null=True,
         write_only=True,
     )
+    # на чтение
     performer_info = EmployeeSerializer(
         source="performer",
         read_only=True,
     )
-
+    # на запись
     parental_task = serializers.PrimaryKeyRelatedField(
         queryset=Task.objects.all(),
         required=False,
         allow_null=True,
         write_only=True,
     )
+    # на чтение
     parental_task_info = TaskShortSerializer(
         source="parental_task",
         read_only=True,
@@ -79,6 +86,8 @@ class TaskSerializer(serializers.ModelSerializer):
 
 
 class EmployeeWithTasksSerializer(serializers.ModelSerializer):
+    """Сериализатор сотрудника с активными задачами."""
+
     tasks = TaskShortSerializer(many=True, read_only=True)
     active_tasks_count = serializers.IntegerField()
 
@@ -94,6 +103,8 @@ class EmployeeWithTasksSerializer(serializers.ModelSerializer):
 
 
 class ImportantTaskReportSerializer(serializers.Serializer):
+    """Сериализатор по важным задачам."""
+
     task_id = serializers.IntegerField()
     task_title = serializers.CharField()
     deadline = serializers.DateTimeField(allow_null=True)
