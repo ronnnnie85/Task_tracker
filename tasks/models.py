@@ -24,12 +24,13 @@ class Employee(models.Model):
 
 
 class Task(models.Model):
-    STATUS_CHOICES = [
-        ("new", "Новая"),
-        ("at_work", "В работе"),
-        ("completed", "Выполнена"),
-        ("cancelled", "Отменена"),
-    ]
+
+    class Status(models.TextChoices):
+        """Перечисление возможных статусов задачи."""
+        NEW = 'new', 'Новая'
+        IN_PROGRESS = 'at_work', 'В работе'
+        DONE = 'completed', 'Выполнена'
+        CANCELLED = 'cancelled', 'Отменена'
 
     title = models.CharField(
         max_length=100,
@@ -61,8 +62,8 @@ class Task(models.Model):
 
     status = models.CharField(
         max_length=20,
-        choices=STATUS_CHOICES,
-        default="new",
+        choices=Status.choices,
+        default=Status.NEW,
         verbose_name="Статус",
         help_text="Укажите статус",
     )
