@@ -28,6 +28,7 @@ class Task(models.Model):
         ("new", "Новая"),
         ("at_work", "В работе"),
         ("completed", "Выполнена"),
+        ("cancelled", "Отменена"),
     ]
 
     title = models.CharField(

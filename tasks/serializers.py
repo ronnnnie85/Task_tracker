@@ -3,15 +3,70 @@ from rest_framework import serializers
 from tasks.models import Task, Employee
 
 
-class TaskSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Task
-        fields = '__all__'
-
-
 class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Employee
-        fields = '__all__'
+        fields = "__all__"
+
+
+class TaskShortSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Task
+        fields = ["id", "title", "status", "deadline"]
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    performer = serializers.PrimaryKeyRelatedField(
+        queryset=Employee.objects.all(),
+        required=False,
+        allow_null=True,
+        write_only=True,
+    )
+    performer_info = EmployeeSerializer(
+        source="performer",
+        read_only=True,
+    )
+
+    parental_task = serializers.PrimaryKeyRelatedField(
+        queryset=Task.objects.all(),
+        required=False,
+        allow_null=True,
+        write_only=True,
+    )
+    parental_task_info = TaskShortSerializer(
+        source="parental_task",
+        read_only=True,
+    )
+
+    class Meta:
+        model = Task
+        fields = [
+            "id",
+            "title",
+            "parental_task",
+            "parental_task_info",
+            "performer",
+            "performer_info",
+            "deadline",
+            "status",
+        ]
+        read_only_fields = [
+            "id",
+        ]
+
+
+class EmployeeWithTasksSerializer(serializers.ModelSerializer):
+    tasks = TaskShortSerializer(many=True, read_only=True)
+    active_tasks_count = serializers.IntegerField()
+
+    class Meta:
+        model = Employee
+        fields = [
+            "id",
+            "full_name",
+            "position",
+            "active_tasks_count",
+            "tasks",
+        ]
