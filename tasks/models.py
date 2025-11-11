@@ -27,10 +27,11 @@ class Task(models.Model):
 
     class Status(models.TextChoices):
         """Перечисление возможных статусов задачи."""
-        NEW = 'new', 'Новая'
-        IN_PROGRESS = 'at_work', 'В работе'
-        DONE = 'completed', 'Выполнена'
-        CANCELLED = 'cancelled', 'Отменена'
+
+        NEW = "new", "Новая"
+        IN_PROGRESS = "at_work", "В работе"
+        DONE = "completed", "Выполнена"
+        CANCELLED = "cancelled", "Отменена"
 
     title = models.CharField(
         max_length=100,

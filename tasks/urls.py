@@ -12,5 +12,7 @@ router.register(r"employees", EmployeeViewSet, basename="employee")
 router.register(r"tasks", TaskViewSet, basename="task")
 
 urlpatterns = [
-    path('tasks/busy_employees/', BusyEmployeesViewList.as_view(), name='busy-employees'),
+    path(
+        "tasks/busy_employees/", BusyEmployeesViewList.as_view(), name="busy-employees"
+    ),
 ] + router.urls

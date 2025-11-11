@@ -3,17 +3,23 @@ from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 
 from tasks.models import Employee, Task
-from tasks.serializers import EmployeeSerializer, TaskSerializer, EmployeeWithTasksSerializer
+from tasks.serializers import (
+    EmployeeSerializer,
+    TaskSerializer,
+    EmployeeWithTasksSerializer,
+)
 
 
 class EmployeeViewSet(viewsets.ModelViewSet):
     serializer_class = EmployeeSerializer
-    queryset = Employee.objects.all().order_by('id')
+    queryset = Employee.objects.all().order_by("id")
 
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
-    queryset = Task.objects.select_related('performer', 'parental_task').all().order_by('id')
+    queryset = (
+        Task.objects.select_related("performer", "parental_task").all().order_by("id")
+    )
 
 
 class BusyEmployeesViewList(ListAPIView):
@@ -32,16 +38,16 @@ class BusyEmployeesViewList(ListAPIView):
 
             employees_data.append(
                 {
-                    'id': employee.id,
-                    'full_name': employee.full_name,
-                    'position': employee.position,
-                    'active_tasks_count': active_count,
-                    'tasks': active_tasks,
+                    "id": employee.id,
+                    "full_name": employee.full_name,
+                    "position": employee.position,
+                    "active_tasks_count": active_count,
+                    "tasks": active_tasks,
                 }
             )
 
         employees_data.sort(
-            key=lambda item: item['active_tasks_count'],
+            key=lambda item: item["active_tasks_count"],
             reverse=True,
         )
 

@@ -70,3 +70,13 @@ class EmployeeWithTasksSerializer(serializers.ModelSerializer):
             "active_tasks_count",
             "tasks",
         ]
+
+
+class ImportantTaskReportSerializer(serializers.Serializer):
+    task_id = serializers.IntegerField()
+    task_title = serializers.CharField()
+    deadline = serializers.DateTimeField(allow_null=True)
+    employees = serializers.ListField(
+        child=serializers.CharField(),
+        allow_empty=True,
+    )
